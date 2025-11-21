@@ -24,7 +24,7 @@ const [formData, setFormData] = useState({
     status: "backlog",
     assignee: "",
     labels: [],
-    createdOn: ""
+createdAt: ""
   });
 
   const [newComment, setNewComment] = useState("");
@@ -40,7 +40,7 @@ setFormData({
         status: issue.status || "backlog",
         assignee: issue.assignee || "",
         labels: issue.labels || [],
-        createdOn: issue.createdOn || ""
+createdAt: issue.createdAt || ""
       });
     } else {
 setFormData({
@@ -350,7 +350,7 @@ setFormData({
                       Created On
                     </label>
                     <div className="text-sm text-slate-600">
-                      {issue?.createdOn ? new Date(issue.createdOn).toLocaleDateString('en-US', {
+{issue?.createdAt ? new Date(issue.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
@@ -497,8 +497,8 @@ setFormData({
                       priority: issue?.priority || "medium",
                       status: issue?.status || "backlog",
                       assignee: issue?.assignee || "",
-                      labels: issue?.labels || [],
-                      createdOn: issue?.createdOn || ""
+labels: issue?.labels || [],
+                      createdAt: issue?.createdAt || ""
                     });
                   }
                 }}
