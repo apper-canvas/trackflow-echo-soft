@@ -341,7 +341,23 @@ setFormData({
                           <span className="text-sm text-slate-500">Unassigned</span>
                         )}
                       </div>
-                    )}
+)}
+                  </div>
+
+                  {/* Created On */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Created On
+                    </label>
+                    <div className="text-sm text-slate-600">
+                      {issue?.createdOn ? new Date(issue.createdOn).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      }) : 'Not available'}
+                    </div>
                   </div>
 </div>
 
