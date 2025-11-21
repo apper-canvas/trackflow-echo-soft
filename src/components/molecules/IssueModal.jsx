@@ -51,7 +51,8 @@ setFormData({
         priority: "medium",
         status: "backlog",
         assignee: "",
-        labels: []
+        labels: [],
+        createdAt: ""
       });
     }
   }, [issue, mode, isOpen]);
