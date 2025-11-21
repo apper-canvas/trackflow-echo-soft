@@ -38,8 +38,8 @@ setFormData({
         type: issue.type || "task",
         priority: issue.priority || "medium", 
         status: issue.status || "backlog",
-assignee: issue.assignee || "",
-        labels: issue.labels || [],
+        assignee: issue.assignee || "",
+        labels: issue.labels || issue.Tags || [],
         CreatedOn: issue.CreatedOn || ""
       });
     } else {
@@ -51,7 +51,7 @@ setFormData({
         priority: "medium",
         status: "backlog",
         assignee: "",
-labels: [],
+        labels: [],
         CreatedOn: ""
       });
     }
