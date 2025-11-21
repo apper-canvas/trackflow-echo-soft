@@ -23,22 +23,24 @@ const [formData, setFormData] = useState({
     priority: "medium",
     status: "backlog",
     assignee: "",
-    labels: []
+    labels: [],
+    createdOn: ""
   });
 
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
 if (issue && mode !== "create") {
-      setFormData({
-name: issue.name || "",
+setFormData({
+        name: issue.name || "",
         title: issue.title || "",
         description: issue.description || "",
         type: issue.type || "task",
         priority: issue.priority || "medium", 
         status: issue.status || "backlog",
         assignee: issue.assignee || "",
-        labels: issue.labels || []
+        labels: issue.labels || [],
+        createdOn: issue.createdOn || ""
       });
     } else {
 setFormData({
@@ -49,7 +51,8 @@ setFormData({
         priority: "medium",
         status: "backlog",
         assignee: "",
-        labels: []
+        labels: [],
+        createdOn: ""
       });
     }
   }, [issue, mode, isOpen]);
@@ -478,7 +481,8 @@ setFormData({
                       priority: issue?.priority || "medium",
                       status: issue?.status || "backlog",
                       assignee: issue?.assignee || "",
-                      labels: issue?.labels || []
+                      labels: issue?.labels || [],
+                      createdOn: issue?.createdOn || ""
                     });
                   }
                 }}
