@@ -52,7 +52,7 @@ setFormData({
         status: "backlog",
         assignee: "",
         labels: [],
-        createdOn: ""
+        CreatedOn: ""
       });
     }
   }, [issue, mode, isOpen]);
