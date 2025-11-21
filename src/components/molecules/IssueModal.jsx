@@ -369,22 +369,7 @@ if (issue && mode !== "create") {
                       )}
                     </div>
                   )}
-                </div>
-                {/* Labels */}
-                {!isEditing && issue?.labels && issue.labels.length > 0 && (
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Labels
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {issue.labels.map((label, index) => (
-                        <Badge key={index} variant="default">
-                          {label}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
+</div>
 
                 {/* Meta info */}
                 {!isEditing && issue && (
