@@ -15,7 +15,7 @@ const IssueModal = ({ isOpen, onClose, issue, onUpdate, mode = "view" }) => {
   const [isEditing, setIsEditing] = useState(mode === "create");
   const [loading, setLoading] = useState(false);
   
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: "",
     description: "",
     type: "task",
@@ -28,7 +28,7 @@ const IssueModal = ({ isOpen, onClose, issue, onUpdate, mode = "view" }) => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    if (issue && mode !== "create") {
+if (issue && mode !== "create") {
       setFormData({
         title: issue.title || "",
         description: issue.description || "",
@@ -38,7 +38,7 @@ const IssueModal = ({ isOpen, onClose, issue, onUpdate, mode = "view" }) => {
         assignee: issue.assignee || "",
         labels: issue.labels || []
       });
-    } else if (mode === "create") {
+    } else {
       setFormData({
         title: "",
         description: "",

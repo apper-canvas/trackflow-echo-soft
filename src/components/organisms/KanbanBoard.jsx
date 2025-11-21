@@ -75,11 +75,11 @@ const KanbanBoard = ({ filters = {} }) => {
     loadIssues();
   }, [filters]);
 
-  const getIssuesForColumn = (status) => {
+const getIssuesForColumn = (status) => {
     return issues.filter(issue => issue.status === status);
   };
 
-  const handleDragStart = (e, issue) => {
+const handleDragStart = (e, issue) => {
     setDraggedIssue(issue);
     e.dataTransfer.effectAllowed = "move";
   };
@@ -116,7 +116,7 @@ const KanbanBoard = ({ filters = {} }) => {
     }
   };
 
-  const handleIssueClick = (issue) => {
+const handleIssueClick = (issue) => {
     setSelectedIssue(issue);
     setShowIssueModal(true);
   };

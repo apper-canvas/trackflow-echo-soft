@@ -51,7 +51,7 @@ const IssueCard = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ApperIcon 
-              name={getTypeIcon(issue.type)} 
+name={getTypeIcon(issue.type)} 
               size={16} 
               className={cn("shrink-0", {
                 "text-red-600": issue.type === "bug",
@@ -73,7 +73,7 @@ const IssueCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="text-sm font-medium text-slate-900 line-clamp-2 leading-5">
+<h3 className="text-sm font-medium text-slate-900 line-clamp-2 leading-5">
           {issue.title}
         </h3>
 
