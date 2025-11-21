@@ -1,6 +1,6 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import { Outlet } from 'react-router-dom';
-import Loading from '@/components/ui/Loading';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import Loading from "@/components/ui/Loading";
 
 // Create AuthContext
 const AuthContext = createContext({});
@@ -22,14 +22,19 @@ function Root() {
     console.log('Logout functionality not implemented');
   };
 
-  useEffect(() => {
+useEffect(() => {
     // Initialize authentication state
     // In a real app, this would check for existing tokens, validate sessions, etc.
     setAuthInitialized(true);
   }, []);
 
   if (!authInitialized) {
-    return <Loading />;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+);
   }
 
   return (
@@ -37,6 +42,5 @@ function Root() {
       <Outlet />
     </AuthContext.Provider>
   );
-}
 
 export default Root;
