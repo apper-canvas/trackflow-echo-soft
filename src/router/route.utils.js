@@ -1,195 +1,109 @@
-import routeConfig from "./routes.json";
+import routes from '@/router/routes.json';
 
-// Custom authorization functions registry
-const customFunctions = {}; // Always keep empty
-
-// Get route configuration with pattern matching
-export const getRouteConfig = (path) => {
-    // Normalize the path
-    if (!path || path === "index") path = "/";
-    if (!path.startsWith("/")) path = "/" + path;
-
-    // First check for direct match
-    if (routeConfig[path]) {
-        return routeConfig[path];
+/**
+ * Get route configuration by name or path
+ * @param {string} identifier - Route name or path
+ * @returns {Object|null} Route configuration object
+ */
+export function getRouteConfig(identifier) {
+  function findRoute(routes, identifier) {
+    for (const route of routes) {
+      if (route.name === identifier || route.path === identifier) {
+        return route;
+      }
+      if (route.children) {
+        const found = findRoute(route.children, identifier);
+        if (found) return found;
+      }
     }
-
-    // If no direct match, check patterns
-    const matches = Object.keys(routeConfig)
-        .filter(pattern => matchesPattern(path, pattern))
-        .map(pattern => ({
-            pattern,
-            config: routeConfig[pattern],
-            specificity: getSpecificity(pattern)
-        }))
-        .sort((a, b) => b.specificity - a.specificity);
-
-    // Return null for unmatched routes to let React Router handle them naturally
-    return matches[0]?.config || null;
-};
-
-// Pattern matching logic
-function matchesPattern(path, pattern) {
-    if (path === pattern) return true;
-
-    // Handle parameter routes (like /product/:id)
-    if (pattern.includes(":")) {
-        const regex = new RegExp("^" + pattern.replace(/:[^/]+/g, "[^/]+") + "$");
-        return regex.test(path);
-    }
-
-    // Handle wildcard patterns
-    if (pattern.includes("*")) {
-        if (pattern.endsWith("/**/*")) {
-            const base = pattern.replace("/**/*", "");
-            return path.startsWith(base + "/");
-        } else if (pattern.endsWith("/*")) {
-            const base = pattern.replace("/*", "");
-            const remainder = path.replace(base, "");
-            return remainder.startsWith("/") && !remainder.substring(1).includes("/");
-        }
-    }
-
-    return false;
+    return null;
+  }
+  
+  return findRoute(routes.routes, identifier);
 }
 
-// Calculate pattern specificity for sorting (higher = more specific)
-function getSpecificity(pattern) {
-    let score = 0;
-
-    // Exact paths get highest priority
-    if (!pattern.includes("*") && !pattern.includes(":")) {
-        score += 1000;
-    }
-
-    // Parameter routes get medium priority
-    if (pattern.includes(":")) {
-        score += 500;
-    }
-
-    // Single wildcards get lower priority than parameters
-    if (pattern.includes("/*") && !pattern.includes("/**/*")) {
-        score += 300;
-    }
-
-    // Deep wildcards get lowest priority
-    if (pattern.includes("/**/*")) {
-        score += 100;
-    }
-
-    // Longer patterns are more specific
-    score += pattern.length;
-
-    return score;
+/**
+ * Verify if user has access to a route
+ * @param {Object} route - Route configuration
+ * @param {Object} user - Current user object
+ * @returns {boolean} Whether user can access the route
+ */
+export function verifyRouteAccess(route, user = null) {
+  if (!route) return false;
+  
+  // Public routes are always accessible
+  if (route.access === 'public') {
+    return true;
+  }
+  
+  // Private routes require authentication
+  if (route.access === 'private') {
+    return !!user;
+  }
+  
+  // Admin routes require admin role
+  if (route.access === 'admin') {
+    return user && user.role === 'admin';
+  }
+  
+  // Default to public access if no access level specified
+  return true;
 }
 
-function evaluateRule(rule, user) {
-    // Basic rules
-    if (rule === "public") return true;
-    if (rule === "authenticated") return !!user;
-
-    return evaluateDynamicRule(rule, user);
+/**
+ * Get all routes flattened
+ * @returns {Array} Array of all route configurations
+ */
+export function getAllRoutes() {
+  function flattenRoutes(routes, parent = null) {
+    let flattened = [];
+    
+    for (const route of routes) {
+      const routeWithParent = { ...route, parent };
+      flattened.push(routeWithParent);
+      
+      if (route.children) {
+        flattened = flattened.concat(flattenRoutes(route.children, route));
+      }
+    }
+    
+    return flattened;
+  }
+  
+  return flattenRoutes(routes.routes);
 }
 
-function evaluateDynamicRule(rule, user) {
-    if (!user) return false;
-
-    try {
-        // Dynamically extract all keys and values from user object
-        const contextKeys = Object.keys(user);
-        const contextValues = Object.values(user);
-
-        // Wrap expression in return statement if not already present
-        const wrappedRule = rule.trim().startsWith('return')
-            ? rule
-            : `return (${rule})`;
-
-        // Create function with all user properties as parameters
-        const func = new Function(...contextKeys, wrappedRule);
-
-        // Execute function with user values
-        const result = func(...contextValues);
-
-        // Ensure boolean result
-        return Boolean(result);
-
-    } catch (error) {
-        console.error('Error evaluating rule:', rule, error);
-        return false;
-    }
+/**
+ * Build full path from route configuration
+ * @param {Object} route - Route configuration
+ * @returns {string} Full route path
+ */
+export function buildRoutePath(route) {
+  if (!route.parent) {
+    return route.path === '/' ? '/' : route.path;
+  }
+  
+  const parentPath = buildRoutePath(route.parent);
+  if (route.index) {
+    return parentPath === '/' ? '/' : parentPath;
+  }
+  
+  if (parentPath === '/') {
+    return `/${route.path}`;
+  }
+  
+  return `${parentPath}/${route.path}`;
 }
 
-// Helper to execute custom function
-function executeCustomFunction(functionName, user) {
-    const func = customFunctions[functionName];
-
-    if (!func) {
-        console.error(`Custom function "${functionName}" not found`);
-        return false;
-    }
-
-    try {
-        return Boolean(func(user));
-    } catch (error) {
-        console.error(`Error executing custom function "${functionName}":`, error);
-        return false;
-    }
-}
-
-export function verifyRouteAccess(config, user) {
-    // If no config exists or `allow` property does not exists in config, allow access (let React Router handle it)
-    if (!config || !config.allow) {
-        return {
-            allowed: true,
-            redirectTo: null,
-            excludeRedirectQuery: false,
-            failed: []
-        };
-    }
-
-    const allowedConfig = config.allow;
-
-    // If custom function is specified, use it instead of when conditions
-    if (allowedConfig.function) {
-        const allowed = executeCustomFunction(allowedConfig.function, user);
-
-        return {
-            allowed,
-            redirectTo: allowed ? null : (allowedConfig.redirectOnDeny || "/login"),
-            excludeRedirectQuery: allowedConfig.excludeRedirectQuery === true,
-            failed: allowed ? [] : [`Custom function "${allowedConfig.function}" failed`]
-        };
-    }
-
-    // Otherwise, use the when conditions as before
-    const whenClause = allowedConfig.when || allowedConfig;
-    const { conditions = [], operator = "OR" } = whenClause;
-
-    // Evaluate all conditions
-    const results = conditions.map(cond => ({
-        label: cond.label,
-        rule: cond.rule,
-        passed: evaluateRule(cond.rule, user)
-    }));
-
-    const failed = results.filter(r => !r.passed);
-
-    // Apply operator logic
-    const allowed = operator === "OR"
-        ? results.some(r => r.passed)
-        : results.every(r => r.passed);
-
-    // Determine redirect
-    let redirectTo = null;
-    if (!allowed) {
-        // Use allowedConfig's redirectOnDeny if available, otherwise redirect to login
-        redirectTo = allowedConfig.redirectOnDeny || "/login";
-    }
-
-    return {
-        allowed,
-        redirectTo,
-        excludeRedirectQuery: allowedConfig.excludeRedirectQuery === true,
-        failed: failed.map(f => f.label)
-    };
+/**
+ * Get route metadata (title, description, etc.)
+ * @param {string} identifier - Route name or path  
+ * @returns {Object} Route metadata
+ */
+export function getRouteMeta(identifier) {
+  const route = getRouteConfig(identifier);
+  return route?.meta || {
+    title: 'TrackFlow',
+    description: 'Issue Tracking System'
+  };
 }

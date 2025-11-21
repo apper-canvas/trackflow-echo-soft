@@ -1,126 +1,106 @@
 {
-  "/": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Dashboard requires authentication",
-            "rule": "authenticated"
-          }
-        ]
-      },
-      "redirectOnDeny": "/login"
+  "routes": [
+    {
+      "path": "/",
+      "name": "root",
+      "element": "Root",
+      "access": "public",
+      "children": [
+        {
+          "path": "auth",
+          "name": "auth",
+          "access": "public",
+          "children": [
+            {
+              "path": "login",
+              "name": "login",
+              "element": "Login",
+              "access": "public",
+              "meta": {
+                "title": "Login - TrackFlow",
+                "description": "Sign in to your account"
+              }
+            },
+            {
+              "path": "signup",
+              "name": "signup", 
+              "element": "Signup",
+              "access": "public",
+              "meta": {
+                "title": "Sign Up - TrackFlow",
+                "description": "Create a new account"
+              }
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "name": "app",
+          "element": "Layout",
+          "access": "private",
+          "children": [
+            {
+              "path": "",
+              "name": "dashboard",
+              "element": "Dashboard",
+              "index": true,
+              "access": "private",
+              "meta": {
+                "title": "Dashboard - TrackFlow",
+                "description": "Overview of your projects and issues"
+              }
+            },
+            {
+              "path": "dashboard",
+              "name": "dashboard-explicit",
+              "element": "Dashboard", 
+              "access": "private",
+              "meta": {
+                "title": "Dashboard - TrackFlow",
+                "description": "Overview of your projects and issues"
+              }
+            },
+            {
+              "path": "issues",
+              "name": "issues",
+              "access": "private",
+              "children": [
+                {
+                  "path": "",
+                  "name": "issues-list",
+                  "element": "ListView",
+                  "index": true,
+                  "access": "private",
+                  "meta": {
+                    "title": "Issues - TrackFlow",
+                    "description": "Manage your project issues"
+                  }
+                },
+                {
+                  "path": "list",
+                  "name": "issues-list-explicit",
+                  "element": "ListView",
+                  "access": "private", 
+                  "meta": {
+                    "title": "Issue List - TrackFlow",
+                    "description": "View issues in list format"
+                  }
+                },
+                {
+                  "path": "board",
+                  "name": "issues-board",
+                  "element": "BoardView",
+                  "access": "private",
+                  "meta": {
+                    "title": "Issue Board - TrackFlow", 
+                    "description": "View issues in kanban board format"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
-  },
-  "/list": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "List view requires authentication",
-            "rule": "authenticated"
-          }
-        ]
-      },
-      "redirectOnDeny": "/login"
-    }
-  },
-  "/board": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Board view requires authentication",
-            "rule": "authenticated"
-          }
-        ]
-      },
-      "redirectOnDeny": "/login"
-    }
-  },
-  "/search": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Search requires authentication",
-            "rule": "authenticated"
-          }
-        ]
-      },
-      "redirectOnDeny": "/login"
-    }
-  },
-  "/login": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Login page is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  },
-  "/signup": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Signup page is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  },
-  "/callback": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Callback page is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  },
-  "/error": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Error page is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  },
-  "/prompt-password/*": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Prompt password is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  },
-  "/reset-password/*": {
-    "allow": {
-      "when": {
-        "conditions": [
-          {
-            "label": "Reset password is public",
-            "rule": "public"
-          }
-        ]
-      }
-    }
-  }
+  ]
 }
