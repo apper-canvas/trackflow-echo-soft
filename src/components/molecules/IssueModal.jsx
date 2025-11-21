@@ -318,7 +318,7 @@ if (issue && mode !== "create") {
                       </div>
                     )}
                   </div>
-                </div>
+</div>
 
                 {/* Description */}
                 <div>
@@ -340,6 +340,36 @@ if (issue && mode !== "create") {
                   )}
                 </div>
 
+                {/* Tags */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Tags
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={formData.labels?.join(', ') || ''}
+                      onChange={(e) => {
+                        const tagsArray = e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag);
+                        setFormData(prev => ({ ...prev, labels: tagsArray }));
+                      }}
+                      placeholder="Enter tags separated by commas (e.g., frontend, urgent, bug)"
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  ) : (
+                    <div className="flex flex-wrap gap-1">
+                      {issue?.labels && issue.labels.length > 0 ? (
+                        issue.labels.map((label, index) => (
+                          <Badge key={index} variant="default" size="xs">
+                            {label}
+                          </Badge>
+                        ))
+                      ) : (
+                        <span className="text-sm text-slate-500">No tags assigned</span>
+                      )}
+                    </div>
+                  )}
+                </div>
                 {/* Labels */}
                 {!isEditing && issue?.labels && issue.labels.length > 0 && (
                   <div>
