@@ -23,8 +23,8 @@ const [formData, setFormData] = useState({
     priority: "medium",
     status: "backlog",
     assignee: "",
-    labels: [],
-createdAt: ""
+labels: [],
+    CreatedOn: ""
   });
 
   const [newComment, setNewComment] = useState("");
@@ -38,9 +38,9 @@ setFormData({
         type: issue.type || "task",
         priority: issue.priority || "medium", 
         status: issue.status || "backlog",
-        assignee: issue.assignee || "",
+assignee: issue.assignee || "",
         labels: issue.labels || [],
-createdAt: issue.createdAt || ""
+        CreatedOn: issue.CreatedOn || ""
       });
     } else {
 setFormData({
@@ -51,8 +51,8 @@ setFormData({
         priority: "medium",
         status: "backlog",
         assignee: "",
-        labels: [],
-        createdAt: ""
+labels: [],
+        CreatedOn: ""
       });
     }
   }, [issue, mode, isOpen]);
@@ -350,7 +350,7 @@ setFormData({
                       Created On
                     </label>
                     <div className="text-sm text-slate-600">
-{issue?.createdAt ? new Date(issue.createdAt).toLocaleDateString('en-US', {
+{issue?.CreatedOn ? new Date(issue.CreatedOn).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
@@ -487,9 +487,9 @@ setFormData({
                   if (mode === "create") {
                     onClose();
                   } else {
-                    setIsEditing(false);
+setIsEditing(false);
                     // Reset form data to original issue values
-setFormData({
+                    setFormData({
                       name: issue?.name || "",
                       title: issue?.title || "",
                       description: issue?.description || "",
@@ -497,8 +497,8 @@ setFormData({
                       priority: issue?.priority || "medium",
                       status: issue?.status || "backlog",
                       assignee: issue?.assignee || "",
-labels: issue?.labels || [],
-                      createdAt: issue?.createdAt || ""
+                      labels: issue?.labels || [],
+                      CreatedOn: issue?.CreatedOn || ""
                     });
                   }
                 }}
