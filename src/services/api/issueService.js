@@ -380,7 +380,7 @@ class IssueService {
     }
   }
 
-  transformFromDatabase(dbRecord) {
+transformFromDatabase = (dbRecord) => {
     return {
       Id: dbRecord.Id,
       title: dbRecord.title_c || "",
@@ -398,7 +398,7 @@ class IssueService {
     };
   }
 
-  transformToDatabase(frontendData) {
+  transformToDatabase = (frontendData) => {
     const dbData = {};
     
     if (frontendData.title !== undefined) dbData.title_c = frontendData.title;
