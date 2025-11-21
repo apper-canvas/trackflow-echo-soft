@@ -1,0 +1,237 @@
+[
+  {
+    "Id": 1,
+    "title": "Login page throws 500 error on invalid credentials",
+    "description": "When users enter incorrect username/password combination, the server returns a 500 internal server error instead of a proper authentication failure response. This prevents users from understanding what went wrong.",
+    "type": "bug",
+    "priority": "high",
+    "status": "in-progress",
+    "assignee": "Sarah Chen",
+    "reporter": "Mike Johnson",
+    "createdAt": "2024-01-15T09:30:00Z",
+    "updatedAt": "2024-01-16T14:20:00Z",
+    "labels": ["authentication", "backend", "urgent"],
+    "comments": [
+      {
+        "id": "c1",
+        "issueId": "1",
+        "author": "Sarah Chen",
+        "content": "I've identified the root cause. The authentication service isn't properly handling the exception when credentials are invalid. Working on a fix now.",
+        "createdAt": "2024-01-16T10:15:00Z"
+      },
+      {
+        "id": "c2", 
+        "issueId": "1",
+        "author": "Mike Johnson",
+        "content": "Thanks for the quick response! This is blocking our demo tomorrow, so really appreciate the priority.",
+        "createdAt": "2024-01-16T10:30:00Z"
+      }
+    ],
+    "attachments": ["error-log-500.txt", "screenshot-login-error.png"]
+  },
+  {
+    "Id": 2,
+    "title": "Add dark mode support to dashboard",
+    "description": "Users have requested a dark mode toggle for better usability during nighttime hours. This should be a system-wide theme that persists across sessions and applies to all UI components.",
+    "type": "feature",
+    "priority": "medium",
+    "status": "todo",
+    "assignee": "Alex Rivera",
+    "reporter": "Lisa Park",
+    "createdAt": "2024-01-14T16:45:00Z",
+    "updatedAt": "2024-01-14T16:45:00Z",
+    "labels": ["ui", "enhancement", "accessibility"],
+    "comments": [],
+    "attachments": ["dark-mode-mockup.fig"]
+  },
+  {
+    "Id": 3,
+    "title": "Database migration script fails on production",
+    "description": "The migration script v2.1.3 fails when running against the production database due to foreign key constraints. Need to update the script to handle existing data properly.",
+    "type": "bug",
+    "priority": "critical",
+    "status": "review",
+    "assignee": "David Kim",
+    "reporter": "Sarah Chen",
+    "createdAt": "2024-01-13T08:15:00Z",
+    "updatedAt": "2024-01-16T16:30:00Z",
+    "labels": ["database", "migration", "production"],
+    "comments": [
+      {
+        "id": "c3",
+        "issueId": "3",
+        "author": "David Kim",
+        "content": "Fixed the constraint issues. The script now creates temporary tables to handle the data migration safely. Ready for review.",
+        "createdAt": "2024-01-16T15:45:00Z"
+      }
+    ],
+    "attachments": ["migration-script-v2.1.4.sql", "production-error.log"]
+  },
+  {
+    "Id": 4,
+    "title": "Implement automated testing pipeline",
+    "description": "Set up CI/CD pipeline with automated unit tests, integration tests, and deployment to staging environment. Should trigger on every pull request and main branch commits.",
+    "type": "task",
+    "priority": "medium",
+    "status": "backlog",
+    "assignee": "Carlos Rodriguez",
+    "reporter": "Emily Taylor",
+    "createdAt": "2024-01-12T11:20:00Z",
+    "updatedAt": "2024-01-12T11:20:00Z",
+    "labels": ["ci/cd", "testing", "infrastructure"],
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "Id": 5,
+    "title": "User profile images not displaying correctly",
+    "description": "Profile images appear pixelated and stretched on user cards. The image resizing logic needs to maintain aspect ratio and provide proper fallback for missing images.",
+    "type": "bug",
+    "priority": "low",
+    "status": "todo",
+    "assignee": "Jessica Wong",
+    "reporter": "Mark Thompson",
+    "createdAt": "2024-01-16T13:10:00Z",
+    "updatedAt": "2024-01-16T13:10:00Z",
+    "labels": ["ui", "images", "frontend"],
+    "comments": [],
+    "attachments": ["profile-image-bug.png"]
+  },
+  {
+    "Id": 6,
+    "title": "Add export functionality for reports",
+    "description": "Users need the ability to export project reports and issue lists to CSV and PDF formats. Should include filtering options and custom date ranges.",
+    "type": "feature",
+    "priority": "medium",
+    "status": "todo",
+    "assignee": "Tom Anderson",
+    "reporter": "Rachel Green",
+    "createdAt": "2024-01-11T09:45:00Z",
+    "updatedAt": "2024-01-11T09:45:00Z",
+    "labels": ["export", "reports", "feature"],
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "Id": 7,
+    "title": "Performance optimization for large datasets",
+    "description": "The issue list becomes slow when loading projects with 1000+ issues. Need to implement pagination, virtual scrolling, or other performance optimizations.",
+    "type": "task",
+    "priority": "high",
+    "status": "in-progress",
+    "assignee": "Kevin Zhang",
+    "reporter": "Amanda Foster",
+    "createdAt": "2024-01-10T15:30:00Z",
+    "updatedAt": "2024-01-15T10:20:00Z",
+    "labels": ["performance", "optimization", "frontend"],
+    "comments": [
+      {
+        "id": "c4",
+        "issueId": "7",
+        "author": "Kevin Zhang",
+        "content": "Implemented virtual scrolling for the issue list. Testing shows 80% improvement in load times for large datasets. Still working on the search functionality optimization.",
+        "createdAt": "2024-01-15T09:30:00Z"
+      }
+    ],
+    "attachments": ["performance-benchmarks.pdf"]
+  },
+  {
+    "Id": 8,
+    "title": "Email notifications not being sent",
+    "description": "Users report they're not receiving email notifications for issue assignments and status changes. The email service integration needs investigation.",
+    "type": "bug",
+    "priority": "medium",
+    "status": "todo",
+    "assignee": "Nina Patel",
+    "reporter": "James Wilson",
+    "createdAt": "2024-01-16T07:20:00Z",
+    "updatedAt": "2024-01-16T07:20:00Z",
+    "labels": ["email", "notifications", "backend"],
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "Id": 9,
+    "title": "Mobile app dashboard redesign",
+    "description": "Redesign the mobile dashboard layout to improve usability on smaller screens. Focus on better navigation, larger touch targets, and improved information hierarchy.",
+    "type": "feature",
+    "priority": "low",
+    "status": "backlog",
+    "assignee": "Sophie Martin",
+    "reporter": "Chris Lee",
+    "createdAt": "2024-01-09T14:15:00Z",
+    "updatedAt": "2024-01-09T14:15:00Z",
+    "labels": ["mobile", "ui/ux", "design"],
+    "comments": [],
+    "attachments": ["mobile-wireframes.fig"]
+  },
+  {
+    "Id": 10,
+    "title": "API rate limiting implementation",
+    "description": "Implement rate limiting on public API endpoints to prevent abuse and ensure fair usage. Should include configurable limits per user/API key and proper error responses.",
+    "type": "task",
+    "priority": "medium",
+    "status": "done",
+    "assignee": "Ryan Murphy",
+    "reporter": "Helen Davis",
+    "createdAt": "2024-01-05T10:00:00Z",
+    "updatedAt": "2024-01-12T16:45:00Z",
+    "labels": ["api", "security", "backend"],
+    "comments": [
+      {
+        "id": "c5",
+        "issueId": "10",
+        "author": "Ryan Murphy",
+        "content": "Rate limiting has been implemented using Redis. Set default limits to 1000 requests per hour per API key. Documentation updated with new headers and error codes.",
+        "createdAt": "2024-01-12T16:30:00Z"
+      }
+    ],
+    "attachments": ["rate-limiting-docs.md"]
+  },
+  {
+    "Id": 11,
+    "title": "Search functionality improvements",
+    "description": "Enhanced search should support fuzzy matching, filters by date range, and search within comments. Users should be able to save and share search queries.",
+    "type": "feature",
+    "priority": "high",
+    "status": "review",
+    "assignee": "Anna Thompson",
+    "reporter": "Peter Kim",
+    "createdAt": "2024-01-08T12:30:00Z",
+    "updatedAt": "2024-01-16T11:15:00Z",
+    "labels": ["search", "enhancement", "frontend"],
+    "comments": [
+      {
+        "id": "c6",
+        "issueId": "11",
+        "author": "Anna Thompson",
+        "content": "Implemented fuzzy search using Fuse.js and added date range filters. The saved searches feature is ready for testing. Can someone review the PR?",
+        "createdAt": "2024-01-16T11:00:00Z"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "Id": 12,
+    "title": "Security audit findings remediation",
+    "description": "Address security vulnerabilities identified in the recent audit: XSS prevention, input validation, and secure session management. All findings marked as high or critical priority.",
+    "type": "bug",
+    "priority": "critical",
+    "status": "in-progress",
+    "assignee": "Michael Brown",
+    "reporter": "Security Team",
+    "createdAt": "2024-01-07T16:00:00Z",
+    "updatedAt": "2024-01-16T09:30:00Z",
+    "labels": ["security", "audit", "critical"],
+    "comments": [
+      {
+        "id": "c7",
+        "issueId": "12",
+        "author": "Michael Brown",
+        "content": "Fixed 3 out of 5 critical vulnerabilities. Working on the XSS prevention in the comment system and session timeout implementation.",
+        "createdAt": "2024-01-16T09:15:00Z"
+      }
+    ],
+    "attachments": ["security-audit-report.pdf", "remediation-plan.docx"]
+  }
+]
