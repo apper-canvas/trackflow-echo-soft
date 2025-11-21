@@ -387,18 +387,13 @@ class IssueService {
 transformFromDatabase = (dbRecord) => {
     return {
       Id: dbRecord.Id,
-      title: dbRecord.title_c || "",
+      title: dbRecord.title_c || dbRecord.Name || "",
       description: dbRecord.description_c || "",
       type: dbRecord.type_c || "task",
       priority: dbRecord.priority_c || "medium",
-status: dbRecord.status_c || "backlog",
-      title: dbRecord.title_c || dbRecord.Name || "",
-      description: dbRecord.description_c || "",
+      status: dbRecord.status_c || "backlog",
+      assignee: dbRecord.assignee_c || "",
       reporter: dbRecord.reporter_c || "",
-      labels: dbRecord.labels_c || [],
-      comments: dbRecord.comments_c || [],
-assignee: dbRecord.assignee_c || "",
-reporter: dbRecord.reporter_c || "",
       labels: dbRecord.Tags ? dbRecord.Tags.split(',').filter(label => label.trim()) : [],
       comments: this.parseComments(dbRecord.comments_c || ""),
       CreatedOn: dbRecord.CreatedOn || new Date().toISOString(),
@@ -408,23 +403,18 @@ reporter: dbRecord.reporter_c || "",
     };
   }
 
-  transformToDatabase = (frontendData) => {
+transformToDatabase = (frontendData) => {
     const dbData = {};
     
     if (frontendData.title !== undefined) dbData.title_c = frontendData.title;
     if (frontendData.description !== undefined) dbData.description_c = frontendData.description;
     if (frontendData.type !== undefined) dbData.type_c = frontendData.type;
     if (frontendData.priority !== undefined) dbData.priority_c = frontendData.priority;
-if (frontendData.status !== undefined) dbData.status_c = frontendData.status;
-    if (frontendData.title !== undefined) dbData.title_c = frontendData.title;
-    if (frontendData.description !== undefined) dbData.description_c = frontendData.description;
-    if (frontendData.reporter !== undefined) dbData.reporter_c = frontendData.reporter;
-    if (frontendData.labels !== undefined) dbData.labels_c = frontendData.labels;
-    if (frontendData.comments !== undefined) dbData.comments_c = frontendData.comments;
+    if (frontendData.status !== undefined) dbData.status_c = frontendData.status;
     if (frontendData.assignee !== undefined) dbData.assignee_c = frontendData.assignee;
     if (frontendData.reporter !== undefined) dbData.reporter_c = frontendData.reporter;
     if (frontendData.labels !== undefined) {
-      dbData.labels_c = Array.isArray(frontendData.labels) 
+      dbData.Tags = Array.isArray(frontendData.labels) 
         ? frontendData.labels.join(',') 
         : frontendData.labels;
     }
