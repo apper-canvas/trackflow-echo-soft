@@ -438,8 +438,8 @@ if (issue && mode !== "create") {
           </div>
 
           {/* Footer */}
-          {isEditing && (
-            <div className="flex justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50">
+{isEditing && (
+            <div className="sticky bottom-0 flex justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50 z-10">
               <Button
                 variant="secondary"
                 onClick={() => {
