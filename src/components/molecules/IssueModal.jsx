@@ -16,6 +16,7 @@ const IssueModal = ({ isOpen, onClose, issue, onUpdate, mode = "view" }) => {
   const [loading, setLoading] = useState(false);
   
 const [formData, setFormData] = useState({
+    name: "",
     title: "",
     description: "",
     type: "task",
@@ -30,6 +31,7 @@ const [formData, setFormData] = useState({
   useEffect(() => {
 if (issue && mode !== "create") {
       setFormData({
+name: issue.name || "",
         title: issue.title || "",
         description: issue.description || "",
         type: issue.type || "task",
@@ -39,7 +41,8 @@ if (issue && mode !== "create") {
         labels: issue.labels || []
       });
     } else {
-      setFormData({
+setFormData({
+        name: "",
         title: "",
         description: "",
         type: "task", 
@@ -200,7 +203,26 @@ if (issue && mode !== "create") {
           <div className="flex-1 overflow-y-auto max-h-[32rem]">
             {activeTab === "details" && (
               <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Name
+                    </label>
+                    {isEditing ? (
+                      <Input
+                        value={formData.name}
+                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                        placeholder="Enter issue name..."
+                        className="w-full"
+                      />
+                    ) : (
+                      <div className="text-lg font-medium text-slate-900">
+                        {issue?.name}
+                      </div>
+                    )}
+                  </div>
+                  
                   {/* Title */}
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -448,7 +470,8 @@ if (issue && mode !== "create") {
                   } else {
                     setIsEditing(false);
                     // Reset form data to original issue values
-                    setFormData({
+setFormData({
+                      name: issue?.name || "",
                       title: issue?.title || "",
                       description: issue?.description || "",
                       type: issue?.type || "task",
